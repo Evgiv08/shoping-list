@@ -175,12 +175,13 @@ body {
   display: inline-block;
 }
 
-.item-action-toggle {
+.item .item-action-toggle {
   background: #eee;
   border: none;
-  padding: 4px 8px;
-  font-size: 18px;
+  padding: 0 5px;
   cursor: pointer;
+  font-weight: 800;
+  font-size: 18px;
 }
 
 .item-dropdown {
