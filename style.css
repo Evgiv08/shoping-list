@@ -27,11 +27,9 @@ body {
   }
   
   li {
-    display: flex;
-    justify-content: space-between;
     background: #eee;
     margin: 5px 0;
-    padding: 10px;
+    padding: 6px;
     border-radius: 5px;
   }
   
@@ -68,7 +66,7 @@ body {
     font-size: 14px;
   }
   
-  .bought .item-toggle-btn {
+  .bought .item-toggle-btn, .bought .item-name {
     text-decoration: line-through;
     color: gray;
   }
