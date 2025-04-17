@@ -39,13 +39,15 @@ body {
   #lists-container {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
   
   .shopping-list {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px 15px;
-    width: 50%;
+    width: 45%;
     background: #f9f9f9;
   }
   
@@ -121,7 +123,13 @@ body {
   }
   .item-add-input {
     padding: 5px;
-}
-.new-list-form {
+  }
+  #new-list-form {
     margin-bottom: 20px;
+  }
+
+  @media only screen and (max-width: 930px) {
+    .shopping-list {
+        width: 100%;
+    }
 }
