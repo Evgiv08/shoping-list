@@ -106,8 +106,13 @@ body {
     padding: 5px;
     cursor: pointer;
   }
-  .item-toggle-btn {
+  .item-edit-btn {
     margin-left: auto;
+    margin-right: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .item-toggle-btn {
     border: 1px solid black;
     border-radius: 5px;
   }
