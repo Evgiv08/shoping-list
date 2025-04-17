@@ -1,72 +1,88 @@
-import { db, ref, onValue, push, set, remove, update } from "./firebase-config.js";
+import { db, ref, onValue, push, set, remove, update } from './firebase-config.js';
 
-let currentListId = null;
+const listsContainer = document.getElementById('lists-container');
+const newListForm = document.getElementById('new-list-form');
+const newListInput = document.getElementById('new-list-name');
 
-const listDropdown = document.getElementById("listDropdown");
-const itemsList = document.getElementById("itemsList");
-const itemsSection = document.getElementById("itemsSection");
+// Добавление нового списка
+newListForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = newListInput.value.trim();
+  if (name) {
+    push(ref(db, 'lists'), { name });
+    newListInput.value = '';
+  }
+});
 
-document.getElementById("createList").onclick = () => {
-  const name = document.getElementById("newListName").value.trim();
-  if (!name) return;
-  const listRef = push(ref(db, "lists"));
-  set(listRef, { name });
-  document.getElementById("newListName").value = "";
-};
+// Слушаем все списки
+onValue(ref(db, 'lists'), (snapshot) => {
+  const lists = snapshot.val();
+  listsContainer.innerHTML = '';
 
-listDropdown.onchange = () => {
-  currentListId = listDropdown.value;
-  itemsSection.style.display = currentListId ? "block" : "none";
-  if (currentListId) loadItems();
-};
-
-document.getElementById("addItem").onclick = () => {
-  const name = document.getElementById("itemName").value.trim();
-  if (!name || !currentListId) return;
-  const itemRef = push(ref(db, `items/${currentListId}`));
-  set(itemRef, { name, bought: false });
-  document.getElementById("itemName").value = "";
-};
-
-function loadLists() {
-  const listsRef = ref(db, "lists");
-  onValue(listsRef, (snapshot) => {
-    listDropdown.innerHTML = '<option value="">Выбери список</option>';
-    snapshot.forEach(child => {
-      const { name } = child.val();
-      const opt = document.createElement("option");
-      opt.value = child.key;
-      opt.textContent = name;
-      listDropdown.appendChild(opt);
+  if (lists) {
+    Object.entries(lists).forEach(([listId, listData]) => {
+      renderList(listId, listData.name);
     });
+  }
+});
+
+function renderList(listId, listName) {
+  const listWrapper = document.createElement('div');
+  listWrapper.className = 'shopping-list';
+
+  const title = document.createElement('h3');
+  title.textContent = listName;
+  listWrapper.appendChild(title);
+
+  const ul = document.createElement('ul');
+  listWrapper.appendChild(ul);
+
+  const form = document.createElement('form');
+  form.innerHTML = `
+    <input type="text" placeholder="Добавить товар..." />
+    <button type="submit">+</button>
+  `;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = form.querySelector('input');
+    const value = input.value.trim();
+    if (value) {
+      push(ref(db, `items/${listId}`), { name: value, bought: false });
+      input.value = '';
+    }
   });
-}
+  listWrapper.appendChild(form);
 
-function loadItems() {
-  const itemsRef = ref(db, `items/${currentListId}`);
-  onValue(itemsRef, (snapshot) => {
-    itemsList.innerHTML = "";
-    snapshot.forEach(child => {
-      const item = child.val();
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <span class="${item.bought ? "bought" : ""}">${item.name}</span>
-        <div>
-          <button onclick="toggleBought('${child.key}', ${!item.bought})">${item.bought ? "↩️" : "✅"}</button>
-          <button onclick="deleteItem('${child.key}')">🗑️</button>
-        </div>
-      `;
-      itemsList.appendChild(li);
-    });
+  // Слушаем товары в списке
+  onValue(ref(db, `items/${listId}`), (snapshot) => {
+    ul.innerHTML = '';
+    const items = snapshot.val();
+    if (items) {
+      Object.entries(items).forEach(([itemId, item]) => {
+        const li = document.createElement('li');
+        li.textContent = item.name;
+        if (item.bought) {
+          li.classList.add('bought');
+        }
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = item.bought ? '↺' : '✓';
+        toggleBtn.onclick = () => {
+          update(ref(db, `items/${listId}/${itemId}`), { bought: !item.bought });
+        };
+
+        const delBtn = document.createElement('button');
+        delBtn.textContent = '🗑️';
+        delBtn.onclick = () => {
+          remove(ref(db, `items/${listId}/${itemId}`));
+        };
+
+        li.appendChild(toggleBtn);
+        li.appendChild(delBtn);
+        ul.appendChild(li);
+      });
+    }
   });
+
+  listsContainer.appendChild(listWrapper);
 }
-
-window.toggleBought = (id, bought) => {
-  update(ref(db, `items/${currentListId}/${id}`), { bought });
-};
-
-window.deleteItem = (id) => {
-  remove(ref(db, `items/${currentListId}/${id}`));
-};
-
-loadLists();

@@ -39,4 +39,42 @@ body {
     text-decoration: line-through;
     color: gray;
   }
+  #lists-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .shopping-list {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    width: 300px;
+    background: #f9f9f9;
+  }
+  
+  .shopping-list h3 {
+    margin-top: 0;
+  }
+  
+  .shopping-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .shopping-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    align-items: center;
+  }
+  
+  .shopping-list li.bought {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
+  .shopping-list button {
+    margin-left: 5px;
+  }
   
