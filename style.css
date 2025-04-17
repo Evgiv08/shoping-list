@@ -122,8 +122,9 @@ body {
     border-radius: 5px;
     color: white;
   }
-  .item-delete-btn {
+  .item .item-delete-btn {
     border: none;
+    padding: 0 5px;
   }
   .item-add-input {
     padding: 5px;
@@ -166,6 +167,9 @@ body {
     left: 0;
     width: 98%;
   }
+  .item-name {
+    flex: 1 1 43%;
+}
 
   @media only screen and (max-width: 930px) {
     .shopping-list {
