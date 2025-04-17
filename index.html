@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Список покупок</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script type="module" src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🛒 Списки покупок</h1>
+
+    <div class="list-selector">
+      <input type="text" id="newListName" placeholder="Название списка"/>
+      <button id="createList">Создать список</button>
+      <select id="listDropdown"></select>
+    </div>
+
+    <div id="itemsSection" style="display:none;">
+      <div class="item-input">
+        <input type="text" id="itemName" placeholder="Название продукта" />
+        <button id="addItem">Добавить</button>
+      </div>
+      <ul id="itemsList"></ul>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getDatabase, ref, onValue, push, set, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "ТВОЙ_API_KEY",
+      authDomain: "ТВОЙ_ПРОЕКТ.firebaseapp.com",
+      databaseURL: "https://ТВОЙ_ПРОЕКТ.firebaseio.com",
+      projectId: "ТВОЙ_ПРОЕКТ",
+      storageBucket: "ТВОЙ_ПРОЕКТ.appspot.com",
+      messagingSenderId: "ID",
+      appId: "ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    export { db, ref, onValue, push, set, remove, update };
+  </script>
+</body>
+</html>
