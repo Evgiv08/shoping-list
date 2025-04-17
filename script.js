@@ -1,4 +1,4 @@
-import { db, ref, onValue, push, set, remove, update } from './firebase-config.js';
+import { db, ref, onValue, push, remove, update } from './firebase-config.js';
 
 const listsContainer = document.getElementById('lists-container');
 const newListForm = document.getElementById('new-list-form');
@@ -33,6 +33,18 @@ function renderList(listId, listName) {
   const title = document.createElement('h3');
   title.textContent = listName;
   listWrapper.appendChild(title);
+
+  const deleteListBtn = document.createElement('button');
+  deleteListBtn.textContent = 'Удалить список';
+  deleteListBtn.classList.add('delete-list-btn');
+  deleteListBtn.onclick = () => {
+    // Удаляем сам список
+    remove(ref(db, `lists/${listId}`));
+
+    // Удаляем все товары этого списка
+    remove(ref(db, `items/${listId}`));
+  };
+  listWrapper.appendChild(deleteListBtn);
 
   const ul = document.createElement('ul');
   listWrapper.appendChild(ul);

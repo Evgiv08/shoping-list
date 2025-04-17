@@ -4,16 +4,13 @@ body {
     margin: 0;
     padding: 20px;
   }
-  
+
   .container {
-    max-width: 600px;
+    max-width: 1100px;
     margin: auto;
-    background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
-  
+
   input, select, button {
     padding: 10px;
     margin: 5px 0;
@@ -67,6 +64,7 @@ body {
     justify-content: space-between;
     margin-bottom: 6px;
     align-items: center;
+    font-size: 14px;
   }
   
   .shopping-list li.bought {
@@ -76,5 +74,19 @@ body {
   
   .shopping-list button {
     margin-left: 5px;
+    font-size: 10px;
+  }
+  
+  .delete-list-btn {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-list-btn:hover {
+    background-color: #ff1a1a;
   }
   

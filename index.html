@@ -9,32 +9,15 @@
   <script type="module" src="script.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <h1>🛒 Списки покупок</h1>
+    <div class="container">
+        <h2>Списки покупок</h2>
 
-    <div class="list-selector">
-      <input type="text" id="newListName" placeholder="Название списка"/>
-      <button id="createList">Создать список</button>
-      <select id="listDropdown"></select>
+        <form id="new-list-form">
+            <input type="text" id="new-list-name" placeholder="Новый список..." />
+            <button type="submit">Создать</button>
+        </form>
+
+        <div id="lists-container"></div>
     </div>
-
-    <div id="itemsSection" style="display:none;">
-      <div class="item-input">
-        <input type="text" id="itemName" placeholder="Название продукта" />
-        <button id="addItem">Добавить</button>
-      </div>
-      <ul id="itemsList"></ul>
-    </div>
-  </div>
-
-  <h2>Списки покупок</h2>
-
-  <form id="new-list-form">
-    <input type="text" id="new-list-name" placeholder="Новый список..." />
-    <button type="submit">Создать</button>
-  </form>
-
-  <div id="lists-container"></div>
-
 </body>
 </html>
