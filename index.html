@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Список покупок</title>
   <link rel="stylesheet" href="style.css"/>
+  <script type="module" src="firebase-config.js"></script>
   <script type="module" src="script.js" defer></script>
 </head>
 <body>
@@ -26,24 +27,5 @@
     </div>
   </div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, set, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "ТВОЙ_API_KEY",
-      authDomain: "ТВОЙ_ПРОЕКТ.firebaseapp.com",
-      databaseURL: "https://ТВОЙ_ПРОЕКТ.firebaseio.com",
-      projectId: "ТВОЙ_ПРОЕКТ",
-      storageBucket: "ТВОЙ_ПРОЕКТ.appspot.com",
-      messagingSenderId: "ID",
-      appId: "ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    export { db, ref, onValue, push, set, remove, update };
-  </script>
 </body>
 </html>

@@ -4,7 +4,7 @@ import { getDatabase, ref, onValue, push, set, remove, update } from "https://ww
 const firebaseConfig = {
     apiKey: "AIzaSyCXVaKdHMT__FXNFQsJ3ER4Ss-sHOWvbVQ",
     authDomain: "shoping-list-real.firebaseapp.com",
-    databaseURL: "https://shoping-list-real-default-rtdb.europe-west1.firebasedatabase.app",
+    databaseURL: "https://shoping-list-real-default-rtdb.europe-west1.firebasedatabase.app/",
     projectId: "shoping-list-real",
     storageBucket: "shoping-list-real.appspot.com",
     messagingSenderId: "266818025489",
