@@ -115,34 +115,34 @@ function renderList(listId, listName) {
 
         let isSelecting = false;
         copyBtn.onclick = () => {
-        if (isSelecting) return;
-        isSelecting = true;
+            if (isSelecting) return;
+            isSelecting = true;
 
-        const select = document.createElement('select');
-        select.className = 'copy-select';
-        select.innerHTML = `<option disabled selected>Выбрать список</option>`;
+            const select = document.createElement('select');
+            select.className = 'copy-select';
+            select.innerHTML = `<option disabled selected>Выбрать список</option>`;
 
-        // Показываем все другие списки
-        Object.entries(allLists).forEach(([otherListId, otherListName]) => {
-            if (otherListId !== listId) {
-            const option = document.createElement('option');
-            option.value = otherListId;
-            option.textContent = otherListName;
-            select.appendChild(option);
-            }
-        });
-
-        select.onchange = () => {
-            const targetListId = select.value;
-            push(ref(db, `items/${targetListId}`), {
-            name: item.name,
-            bought: false
+            // Показываем все другие списки
+            Object.entries(allLists).forEach(([otherListId, otherListName]) => {
+                if (otherListId !== listId) {
+                const option = document.createElement('option');
+                option.value = otherListId;
+                option.textContent = otherListName.name;
+                select.appendChild(option);
+                }
             });
-            select.remove();
-            isSelecting = false;
-        };
 
-        li.appendChild(select);
+            select.onchange = () => {
+                const targetListId = select.value;
+                push(ref(db, `items/${targetListId}`), {
+                name: item.name,
+                bought: false
+                });
+                select.remove();
+                isSelecting = false;
+            };
+
+            li.appendChild(select);
         };
 
         li.appendChild(copyBtn);
