@@ -53,7 +53,7 @@ function renderList(listId, listName) {
   form.className = 'item-add-form';
   form.innerHTML = `
     <input type="text" class="item-add-input" placeholder="Добавить товар..." />
-    <button type="submit" class="item-add-btn">+</button>
+    <button type="submit" class="item-add-btn">Додати</button>
   `;
   form.addEventListener('submit', (e) => {
     e.preventDefault();

@@ -35,13 +35,9 @@ body {
     border-radius: 5px;
   }
   
-  .bought {
-    text-decoration: line-through;
-    color: gray;
-  }
+
   #lists-container {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
   }
   
@@ -49,7 +45,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px 15px;
-    width: 300px;
+    width: 50%;
     background: #f9f9f9;
   }
   
@@ -70,13 +66,12 @@ body {
     font-size: 14px;
   }
   
-  .shopping-list li.bought {
+  .bought .item-toggle-btn {
     text-decoration: line-through;
     color: gray;
   }
   
   .shopping-list button {
-    margin-left: 5px;
     font-size: 10px;
   }
   
@@ -102,9 +97,12 @@ body {
     margin-top: 0;
     margin-bottom: 0;
     padding: 5px;
+    cursor: pointer;
   }
   .item-toggle-btn {
     margin-left: auto;
+    border: 1px solid black;
+    border-radius: 5px;
   }
   .list-delete-btn {
     padding: 5px;
@@ -113,3 +111,17 @@ body {
     border-radius: 5px;
     color: white;
   }
+  .item-delete-btn {
+    margin-left: 5px;
+    text-decoration: none;
+    background: red;
+    color: white;
+    border: 1px solid red;
+    border-radius: 5px;
+  }
+  .item-add-input {
+    padding: 5px;
+}
+.new-list-form {
+    margin-bottom: 20px;
+}
