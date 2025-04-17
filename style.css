@@ -92,4 +92,24 @@ body {
   .delete-list-btn:hover {
     background-color: #ff1a1a;
   }
-  
+
+  .item-add-btn {
+    margin-left: 0;
+    padding: 5px;
+  }
+  .item button {
+    width: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 5px;
+  }
+  .item-toggle-btn {
+    margin-left: auto;
+  }
+  .list-delete-btn {
+    padding: 5px;
+    background: red;
+    border: none;
+    border-radius: 5px;
+    color: white;
+  }

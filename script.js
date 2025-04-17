@@ -37,7 +37,7 @@ function renderList(listId, listName) {
   listWrapper.appendChild(title);
 
   const deleteListBtn = document.createElement('button');
-  deleteListBtn.textContent = 'Удалить список';
+  deleteListBtn.textContent = 'Видалити список';
   deleteListBtn.className = 'list-delete-btn';
   deleteListBtn.onclick = () => {
     remove(ref(db, `lists/${listId}`));
