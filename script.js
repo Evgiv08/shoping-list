@@ -28,35 +28,36 @@ onValue(ref(db, 'lists'), (snapshot) => {
 
 function renderList(listId, listName) {
   const listWrapper = document.createElement('div');
-  listWrapper.className = 'shopping-list';
+  listWrapper.className = 'shopping-list list-wrapper';
+  listWrapper.dataset.listId = listId;
 
   const title = document.createElement('h3');
+  title.className = 'list-title';
   title.textContent = listName;
   listWrapper.appendChild(title);
 
   const deleteListBtn = document.createElement('button');
   deleteListBtn.textContent = 'Удалить список';
-  deleteListBtn.classList.add('delete-list-btn');
+  deleteListBtn.className = 'list-delete-btn';
   deleteListBtn.onclick = () => {
-    // Удаляем сам список
     remove(ref(db, `lists/${listId}`));
-
-    // Удаляем все товары этого списка
     remove(ref(db, `items/${listId}`));
   };
   listWrapper.appendChild(deleteListBtn);
 
   const ul = document.createElement('ul');
+  ul.className = 'item-list';
   listWrapper.appendChild(ul);
 
   const form = document.createElement('form');
+  form.className = 'item-add-form';
   form.innerHTML = `
-    <input type="text" placeholder="Добавить товар..." />
-    <button type="submit">+</button>
+    <input type="text" class="item-add-input" placeholder="Добавить товар..." />
+    <button type="submit" class="item-add-btn">+</button>
   `;
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const input = form.querySelector('input');
+    const input = form.querySelector('.item-add-input');
     const value = input.value.trim();
     if (value) {
       push(ref(db, `items/${listId}`), { name: value, bought: false });
@@ -72,19 +73,20 @@ function renderList(listId, listName) {
     if (items) {
       Object.entries(items).forEach(([itemId, item]) => {
         const li = document.createElement('li');
+        li.className = `item ${item.bought ? 'bought' : ''}`;
+        li.dataset.itemId = itemId;
         li.textContent = item.name;
-        if (item.bought) {
-          li.classList.add('bought');
-        }
 
         const toggleBtn = document.createElement('button');
-        toggleBtn.textContent = item.bought ? '↺' : '✓';
+        toggleBtn.className = 'item-toggle-btn';
+        toggleBtn.textContent = item.bought ? 'Відмінити' : 'Куплено';
         toggleBtn.onclick = () => {
           update(ref(db, `items/${listId}/${itemId}`), { bought: !item.bought });
         };
 
         const delBtn = document.createElement('button');
-        delBtn.textContent = '🗑️';
+        delBtn.className = 'item-delete-btn';
+        delBtn.textContent = 'Видалити';
         delBtn.onclick = () => {
           remove(ref(db, `items/${listId}/${itemId}`));
         };
