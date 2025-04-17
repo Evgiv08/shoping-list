@@ -123,12 +123,7 @@ body {
     color: white;
   }
   .item-delete-btn {
-    margin-left: 5px;
-    text-decoration: none;
-    background: red;
-    color: white;
-    border: 1px solid red;
-    border-radius: 5px;
+    border: none;
   }
   .item-add-input {
     padding: 5px;

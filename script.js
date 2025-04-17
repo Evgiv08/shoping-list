@@ -153,20 +153,21 @@ function renderList(listId, listName) {
         };
 
         li.appendChild(copyBtn);
-
-          const delBtn = document.createElement('button');
-          delBtn.className = 'item-delete-btn';
-          delBtn.textContent = 'Видалити';
-          delBtn.onclick = () => {
-            remove(ref(db, `items/${listId}/${itemId}`));
-          };
-  
-          li.appendChild(toggleBtn);
-          li.appendChild(delBtn);
-          ul.appendChild(li);
-        });
-      }
-    });
+        li.appendChild(toggleBtn);
+        li.insertAdjacentHTML('beforeend', `
+          <button class="item-delete-btn">
+            <img src="https://cdn-icons-png.flaticon.com/128/5974/5974771.png" width="20" height="20" alt="Видалити">
+          </button>
+        `);
+          
+        const delBtn = li.querySelector('.item-delete-btn:last-of-type');
+        delBtn.onclick = () => {
+          remove(ref(db, `items/${listId}/${itemId}`));
+        };
+        ul.appendChild(li);
+      });
+    }
+  });
   
     listsContainer.appendChild(listWrapper);
   }
