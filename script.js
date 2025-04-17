@@ -3,6 +3,7 @@ import { db, ref, onValue, push, remove, update } from './firebase-config.js';
 const listsContainer = document.getElementById('lists-container');
 const newListForm = document.getElementById('new-list-form');
 const newListInput = document.getElementById('new-list-name');
+let currentSelect = null;
 
 // Добавление нового списка
 newListForm.addEventListener('submit', (e) => {
@@ -110,39 +111,45 @@ function renderList(listId, listName) {
   
         // Кнопка "Копировать"
         const copyBtn = document.createElement('button');
-        copyBtn.textContent = '📋';
+        copyBtn.textContent = 'Додати до...';
         copyBtn.className = 'item-copy-btn';
 
         let isSelecting = false;
-        copyBtn.onclick = () => {
-            if (isSelecting) return;
-            isSelecting = true;
-
-            const select = document.createElement('select');
-            select.className = 'copy-select';
-            select.innerHTML = `<option disabled selected>Выбрать список</option>`;
-
-            // Показываем все другие списки
-            Object.entries(allLists).forEach(([otherListId, otherListName]) => {
-                if (otherListId !== listId) {
-                const option = document.createElement('option');
-                option.value = otherListId;
-                option.textContent = otherListName.name;
-                select.appendChild(option);
-                }
+        copyBtn.onclick = (e) => {
+          // Если уже открыт — сначала удаляем предыдущий
+          if (currentSelect) {
+            currentSelect.remove();
+            currentSelect = null;
+          }
+        
+          const select = document.createElement('select');
+          select.className = 'copy-select';
+          select.innerHTML = `<option disabled selected>Выбрать список</option>`;
+        
+          Object.entries(allLists).forEach(([otherListId, otherListData]) => {
+            if (otherListId !== listId) {
+              const option = document.createElement('option');
+              option.value = otherListId;
+              option.textContent = otherListData.name;
+              select.appendChild(option);
+            }
+          });
+        
+          select.onchange = () => {
+            const targetListId = select.value;
+            push(ref(db, `items/${targetListId}`), {
+              name: item.name,
+              bought: false
             });
-
-            select.onchange = () => {
-                const targetListId = select.value;
-                push(ref(db, `items/${targetListId}`), {
-                name: item.name,
-                bought: false
-                });
-                select.remove();
-                isSelecting = false;
-            };
-
-            li.appendChild(select);
+            select.remove();
+            currentSelect = null;
+          };
+        
+          li.appendChild(select);
+          currentSelect = select;
+        
+          // Остановить всплытие, чтобы не сработал document.onclick
+          e.stopPropagation();
         };
 
         li.appendChild(copyBtn);
@@ -163,4 +170,10 @@ function renderList(listId, listName) {
   
     listsContainer.appendChild(listWrapper);
   }
-  
+
+  document.addEventListener('click', (e) => {
+    if (currentSelect && !currentSelect.contains(e.target)) {
+      currentSelect.remove();
+      currentSelect = null;
+    }
+  });
