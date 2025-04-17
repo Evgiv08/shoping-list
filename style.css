@@ -172,6 +172,9 @@ body {
 }
 
   @media only screen and (max-width: 930px) {
+    body {
+      padding: 0;
+  }
     .shopping-list {
         width: 100%;
     }
