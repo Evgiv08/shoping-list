@@ -169,6 +169,8 @@ body {
     height: 100%;
     margin: 0;
     background: white;
+    -webkit-appearance: none; 
+    appearance: none;
   }
   .item-name {
     flex: 1 1 43%;
