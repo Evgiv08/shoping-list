@@ -153,6 +153,22 @@ body {
   .list-title {
     font-size: 16px;
   }
+  .item-copy-btn {
+    margin-left: 5px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .copy-select {
+    margin-left: 5px;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
 
   @media only screen and (max-width: 930px) {
     .shopping-list {

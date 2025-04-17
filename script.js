@@ -14,14 +14,18 @@ newListForm.addEventListener('submit', (e) => {
   }
 });
 
+let allLists = {};
+
 // Слушаем все списки
 onValue(ref(db, 'lists'), (snapshot) => {
   const lists = snapshot.val();
   listsContainer.innerHTML = '';
 
   if (lists) {
+    allLists = lists;
     Object.entries(lists).forEach(([listId, listData]) => {
       renderList(listId, listData.name);
+    
     });
   }
 });
@@ -104,6 +108,45 @@ function renderList(listId, listName) {
             update(ref(db, `items/${listId}/${itemId}`), { bought: !item.bought });
           };
   
+        // Кнопка "Копировать"
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = '📋';
+        copyBtn.className = 'item-copy-btn';
+
+        let isSelecting = false;
+        copyBtn.onclick = () => {
+        if (isSelecting) return;
+        isSelecting = true;
+
+        const select = document.createElement('select');
+        select.className = 'copy-select';
+        select.innerHTML = `<option disabled selected>Выбрать список</option>`;
+
+        // Показываем все другие списки
+        Object.entries(allLists).forEach(([otherListId, otherListName]) => {
+            if (otherListId !== listId) {
+            const option = document.createElement('option');
+            option.value = otherListId;
+            option.textContent = otherListName;
+            select.appendChild(option);
+            }
+        });
+
+        select.onchange = () => {
+            const targetListId = select.value;
+            push(ref(db, `items/${targetListId}`), {
+            name: item.name,
+            bought: false
+            });
+            select.remove();
+            isSelecting = false;
+        };
+
+        li.appendChild(select);
+        };
+
+        li.appendChild(copyBtn);
+
           const delBtn = document.createElement('button');
           delBtn.className = 'item-delete-btn';
           delBtn.textContent = 'Видалити';
